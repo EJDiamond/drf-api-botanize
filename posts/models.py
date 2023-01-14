@@ -17,7 +17,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     plant_type = models.CharField(
-        max_length=32, choices=plant_type_choices, default='normal'
+        max_length=32, choices=plant_type_choices, default='palms'
     )
     plant = models.CharField(max_length=255)
     question = models.TextField(blank=True)

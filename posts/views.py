@@ -89,5 +89,3 @@ class PostDetail(APIView):
         return Response(
             status=status.HTTP_204_NO_CONTENT
         )
-
-

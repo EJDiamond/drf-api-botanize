@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.shortcuts import render
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Answer
 from .serializers import AnswerSerializer, AnswerDetailSerializer
@@ -14,8 +15,11 @@ class AnswerList(generics.ListCreateAPIView):
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
+        DjangoFilterBackend,
     ]
-
+    filterset_fields = [
+        'post'
+    ]
     ordering_fields = [
         'like_count',
     ]

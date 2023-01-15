@@ -16,6 +16,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
     like_id = serializers.SerializerMethodField()
+    like_count = serializers.ReadOnlyField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -41,6 +42,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'post', 'created_at', 'updated_at', 'content', 'like_id',
+            'like_count',
         ]
 
 

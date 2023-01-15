@@ -1,5 +1,6 @@
+from django.db.models import Count
 from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Post
 from .serializers import PostSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -12,7 +13,16 @@ class PostList(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly]
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        bookmark_count=Count('bookmarks', distinct=True)
+    ).order_by('-created_at')
+    filter_backends = [
+        filters.OrderingFilter,
+    ]
+
+    ordering_fields = [
+        'bookmark_count',
+    ]
 
     def perform_create(self, serializer):
         """

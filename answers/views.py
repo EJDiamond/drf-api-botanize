@@ -33,4 +33,6 @@ class AnswerDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = AnswerDetailSerializer
-    queryset = Answer.objects.all()
+    queryset = Answer.objects.annotate(
+        like_count=Count('likes', distinct=True),
+    ).order_by('-created_at')

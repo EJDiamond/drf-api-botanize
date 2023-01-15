@@ -1,6 +1,7 @@
 from django.db.models import Count
 from django.shortcuts import render
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post
 from .serializers import PostSerializer
 from drf_api.permissions import IsOwnerOrReadOnly
@@ -18,6 +19,18 @@ class PostList(generics.ListCreateAPIView):
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
+        filters.SearchFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile',
+        'bookmarks__owner__profile',
+        'owner__profile',
+    ]
+    search_fields = [
+        'owner__username',
+        'plant',
+        'plant_type',
     ]
 
     ordering_fields = [
@@ -37,4 +50,6 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        bookmark_count=Count('bookmarks', distinct=True)
+    ).order_by('-created_at')

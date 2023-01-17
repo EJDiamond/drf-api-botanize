@@ -19,6 +19,7 @@ The backend API section of my Botanize sharing platform project is powered by th
     - [JSON Web Tokens](#json-web-tokens)
     - [Prepare API for Heroku deployment](#prepare-api-for-heroku-deployment)
     - [Heroku Deployment](#heroku-deployment)
+    - [Bug Fix dj-rest-auth](#bug-fix-dj-rest-auth)
 6. [Credits](#credits)
 7. [Acknowledgements](#acknowledgements)
 
@@ -434,3 +435,7 @@ Below is the fix for the bug which doesn't allow users to log out.
     ```
 5. Save, add, commit and push to Github
 6. Manually deploy the project again and use open app to view the deployed site.
+
+# Credits
+
+- The DRF-API walkthrough project was used to set up this project, modifications were made to customise including adding models, serializers and views to allow users to like answers given by other users and to bookmark post of interest.

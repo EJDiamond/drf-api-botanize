@@ -8,6 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    answer_count = serializers.ReadOnlyField()
     bookmark_id = serializers.SerializerMethodField()
     bookmark_count = serializers.ReadOnlyField()
 
@@ -44,5 +45,6 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'created_at', 'updated_at', 'plant_type', 'plant',
-            'question', 'image', 'bookmark_id', 'bookmark_count',
+            'question', 'image', 'answer_count', 'bookmark_id',
+            'bookmark_count',
         ]

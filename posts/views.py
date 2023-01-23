@@ -15,6 +15,7 @@ class PostList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly]
     queryset = Post.objects.annotate(
+        answer_count=Count('answer', distinct=True),
         bookmark_count=Count('bookmarks', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
@@ -35,6 +36,7 @@ class PostList(generics.ListCreateAPIView):
 
     ordering_fields = [
         'bookmark_count',
+        'answer_count',
     ]
 
     def perform_create(self, serializer):
@@ -51,5 +53,6 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
     queryset = Post.objects.annotate(
+        answer_count=Count('answer', distinct=True),
         bookmark_count=Count('bookmarks', distinct=True)
     ).order_by('-created_at')

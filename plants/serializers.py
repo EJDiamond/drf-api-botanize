@@ -4,6 +4,9 @@ from plants.models import Plant
 
 class PlantSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    is_owner = serializers.SerializerMethodField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
 
     def validate_image(self, value):
         if value.size > 1024 * 1024 * 2:
@@ -23,6 +26,7 @@ class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = [
-            'id', 'owner', 'created_at', 'updated_at', 'plant_name',
+            'id', 'owner', 'created_at', 'is_owner', 'profile_id',
+            'profile_image', 'updated_at', 'plant_name',
             'plant_type', 'image', 'age', 'about',
         ]

@@ -23,7 +23,6 @@ class PlantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
         fields = [
-            'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
-            'created_at', 'updated_at', 'plant_name',
+            'id', 'owner', 'created_at', 'updated_at', 'plant_name',
             'plant_type', 'image', 'age', 'about',
         ]

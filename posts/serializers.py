@@ -11,6 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     answer_count = serializers.ReadOnlyField()
     bookmark_id = serializers.SerializerMethodField()
     bookmark_count = serializers.ReadOnlyField()
+    plant_type_display = serializers.ReadOnlyField(source='get_plant_type_display')
 
     def validate_image(self, value):
         if value.size > 1024 * 1024 * 2:
@@ -46,5 +47,5 @@ class PostSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'created_at', 'updated_at', 'plant_type', 'plant',
             'question', 'image', 'answer_count', 'bookmark_id',
-            'bookmark_count',
+            'bookmark_count', 'plant_type_display',
         ]

@@ -7,6 +7,7 @@ class PlantSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    plant_type_display = serializers.ReadOnlyField(source='get_plant_type_display')
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -32,5 +33,5 @@ class PlantSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'created_at', 'is_owner', 'profile_id',
             'profile_image', 'updated_at', 'plant_name',
-            'plant_type', 'image', 'age', 'about',
+            'plant_type', 'image', 'age', 'about', 'plant_type_display',
         ]

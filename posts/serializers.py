@@ -11,7 +11,6 @@ class PostSerializer(serializers.ModelSerializer):
     answer_count = serializers.ReadOnlyField()
     bookmark_id = serializers.SerializerMethodField()
     bookmark_count = serializers.ReadOnlyField()
-    plant_type = serializers.ReadOnlyField(source='get_plant_type_display')
 
     def validate_image(self, value):
         if value.size > 1024 * 1024 * 2:

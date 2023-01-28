@@ -2,7 +2,9 @@
 
 The backend API section of my Botanize sharing platform project is powered by the Django Rest Framework which supports the ReactJS frontend section
 
-[View deployed backend](https://botanize-api.herokuapp.com/)
+- [View deployed backend](https://botanize-api.herokuapp.com/)
+- [View front end delpoyed](https://botanize.herokuapp.com/)
+- [Front end repository](https://github.com/EJDiamond/botanize)
 
 
 # Table of contents

@@ -278,17 +278,17 @@ Yet to find any bugs.
 ## Heroku Deployment
 
 1. Login to Heroku and on the dashboard select create new app
-3. Login to ElephantSQL and create a new instance, selecting tiny turtle plan and the region. Got to the URL section and copy the database URL.
-2. Back in Heroku, in the settings tab, reveal Config Vars and add DATABASE_URL with the value set to the databse URL from ELEPHANTSQL.
-3. Back in the Gitpod workspace, install dj_database_url and psycopg2
+2. Login to ElephantSQL and create a new instance, selecting tiny turtle plan and the region. Got to the URL section and copy the database URL.
+3. Back in Heroku, in the settings tab, reveal Config Vars and add DATABASE_URL with the value set to the databse URL from ELEPHANTSQL.
+4. Back in the Gitpod workspace, install dj_database_url and psycopg2
     ```
-    pip install dj_database_url_psycopg2
+     pip3 install dj_database_url==0.5.0 psycopg2
     ```
-4. In ```settings.py``` under import os add
+5. In ```settings.py``` under import os add
     ```
     import dj_database_url
     ```
-5. In ```settings.py``` update the DATABASES section to allow for development to use the sqlite database and the deployed version, the ElephantSQL
+6. In ```settings.py``` update the DATABASES section to allow for development to use the sqlite database and the deployed version, the ElephantSQL
     ```
     if 'DEV' in os.environ:
         DATABASES = {
@@ -302,48 +302,48 @@ Yet to find any bugs.
             'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
         }
     ```
-6. In ```env.py``` add a new environment variable with the key set to DATABASE_URL, and the value to the ElephantSQL database URL.
+7. In ```env.py``` add a new environment variable with the key set to DATABASE_URL, and the value to the ElephantSQL database URL.
     ```
-    os.environ.setdefault("DATABASE_URL", "<your PostgreSQL URL here>")
+    os.environ.setdefault("DATABASE_URL", "<your ElephantSQL URL here>")
     ```
-7. Comment out the DEV environment variable (temporary so Gitpod can connect to ElephantSQL database)
+8. Comment out the DEV environment variable (temporary so Gitpod can connect to ElephantSQL database)
     ```
     # os.environ['DEV'] = '1'
     ```
-8. Migrate the database models to the new database
+9. Migrate the database models to the new database
     ```
     python3 manage.py migrate
     ```
-9. Create a superuser for the new database using the following terminal command and adding a username and password.
+10. Create a superuser for the new database using the following terminal command and adding a username and password.
     ```
     python3 manage.py createsuperuser
     ```
-10. Install Gunicorn library
+11. Install Gunicorn library
     ```
     pip install gunicorn
     ```
-11. Update the requirements.txt
+12. Update the requirements.txt
     ```
     pip freeze --local > requirements.txt
     ```
-12. Create a Profile and add the following two commands
+13. Create a Profile and add the following two commands
     ```
     release: python manage.py makemigrations && python manage.py migrate
     web: gunicorn drf_api.wsgi
     ```
-13. In ```settings.py``` update value of ALLOWED_HOSTS
+14. In ```settings.py``` update value of ALLOWED_HOSTS
     ```
     ALLOWED_HOSTS = ['localhost', 'botanize-api.herokuapp.com']
     ```
-14. Add corsheaders to INSTALLED_APPS
+15. Add corsheaders to INSTALLED_APPS
     ```
     'corsheaders',
     ```
-15. In ```settings.py` at the top of the MIDDLEWARE section add
+16. In ```settings.py` at the top of the MIDDLEWARE section add
     ```
     'corsheaders.middleware.CorsMiddleware',
     ```
-16. Beneath the MIDDLEWARE set the allowed origins for network requests made to the server
+17. Beneath the MIDDLEWARE set the allowed origins for network requests made to the server
     ```
     if 'CLIENT_ORIGIN' in os.environ:
         CORS_ALLOWED_ORIGINS = [
@@ -357,11 +357,11 @@ Yet to find any bugs.
         ]
     CORS_ALLOW_CREDENTIALS = True
     ```
-17. In ```settings.py``` set jwt samesite to none to ensure the cookies are not blocked
+18. In ```settings.py``` set jwt samesite to none to ensure the cookies are not blocked
     ```
     JWT_AUTH_SAMESITE = 'None'
     ```
-18. In ```settings.py``` replace the secret value
+19. In ```settings.py``` replace the secret value
     ```
     SECRET_KEY = os.getenv('SECRET_KEY')
     ```
